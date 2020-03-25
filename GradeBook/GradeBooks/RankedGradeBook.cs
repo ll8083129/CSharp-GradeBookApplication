@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace GradeBook.GradeBooks
@@ -17,12 +18,7 @@ namespace GradeBook.GradeBooks
                 throw new InvalidOperationException("Ranked-grading requires a minumum of 5 students to work.");
             }
             var treshold = (int)Math.Ceiling(Students.Count * 0.2);
-            List<double> grades = new List<double>();
-            foreach (var student in Students)
-            {
-                grades.Add(student.AverageGrade);
-            }
-            grades.Sort();
+            var grades = Students.OrderByDescending(e => e.AverageGrade).Select(e => e.AverageGrade).ToList();
             if(grades[treshold-1] <= averageGrade)
             {
                 return 'A';
