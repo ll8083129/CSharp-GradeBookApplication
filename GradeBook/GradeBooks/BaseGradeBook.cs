@@ -109,6 +109,18 @@ namespace GradeBook.GradeBooks
 
         public virtual double GetGPA(char letterGrade, StudentType studentType)
         {
+            if (IsWeighted && (studentType == StudentType.Honors || studentType == StudentType.DualEnrolled))
+            {
+                return GetNotWeightedGPA(letterGrade) + 1;
+            }
+            else
+            {
+                return GetNotWeightedGPA(letterGrade);
+            }
+        }
+
+        private static double GetNotWeightedGPA(char letterGrade)
+        {
             switch (letterGrade)
             {
                 case 'A':
@@ -266,7 +278,7 @@ namespace GradeBook.GradeBooks
                              from type in assembly.GetTypes()
                              where type.FullName == "GradeBook.GradeBooks.StandardGradeBook"
                              select type).FirstOrDefault();
-            
+
             return JsonConvert.DeserializeObject(json, gradebook);
         }
     }
