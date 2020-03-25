@@ -27,6 +27,10 @@ namespace GradeBook.GradeBooks
             {
                 return 'A';
             }
+            else if (grades[treshold-2] <= averageGrade)
+            {
+                return 'B';
+            }
             
             return 'F';
         }
